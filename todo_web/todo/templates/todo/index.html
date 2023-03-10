@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2098/2098402.png" type="image/icon type">
+    <title>My Nice-looking HTML Template</title>
+    <style>
+		/* Add CSS styling to make the table look nice */
+		table {
+			border-collapse: collapse;
+			width: 100%;
+			margin: 20px 0;
+			font-size: 1em;
+			font-family: sans-serif;
+			min-width: 400px;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+		}
+
+		th {
+			background-color: #0077b6;
+			color: #ffffff;
+			text-align: left;
+			padding: 12px;
+			font-weight: bold;
+			text-transform: uppercase;
+			border-top: 4px solid #9AB8F3;
+		}
+
+		td {
+			border-top: 1px solid #dee2e6;
+			padding: 12px;
+			text-align: left;
+			vertical-align: middle;
+		}
+
+		tr:nth-of-type(even) {
+			background-color: #f8f8f8;
+		}
+
+		tr:hover {
+			background-color: #f1f1f1;
+		}
+
+
+    </style>
+</head>
+<body>
+<h1 style="text-align: center;">Welcome to My Nice-looking HTML Template</h1>
+<div style="position: fixed; top: 20px; right: 20px;">
+  <form action="/reset">
+    <button style="background-color: #0077b6;
+                    border: none;
+                    color: white;
+                    padding: 15px 32px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 16px;
+                    margin: 4px 2px;
+                    cursor: pointer;
+                    box-shadow: 0px 3px 3px #999;
+                    border-radius: 10px;">Reset
+    </button>
+  </form>
+</div>
+
+<form method="POST">
+    {% csrf_token %}
+    <input style="background-color: #0077b6;
+                    border: none;
+                    color: white;
+                    padding: 15px 32px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 16px;
+                    margin: 4px 2px;
+                    cursor: pointer;
+                    box-shadow: 0px 3px 3px #999;
+                    border-radius: 10px;" type="submit" value="Save">
+
+    <table>
+        <thead>
+        <tr>
+            <th style="width:5%; text-align:center;">Check</th>
+            <th style="width:50%; text-align:center;">Task</th>
+            <th style="width:10%; text-align:center;">Limit</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for t in tasks_data %}
+        <tr>
+            <td style="text-align:center;"><input type="checkbox" name="check_status_{{ t.task_id }}" {% if t.check_status == True%}checked="checked"{% else %}{% endif %}></td>
+            <td style="text-align:center;"><input style="width:100%;" type="text" name="task_{{ t.task_id }}" value="{{ t.task }}"></td>
+            <td style="text-align:center;">
+                <input style="width:45%;" type="time" name="time_{{ t.task_id }}" value="{{ t.time|time:'H:i' }}">
+                <input style="width:45%;" type="date" name="date_{{ t.task_id }}" value="{{ t.date|date:'Y-m-d' }}">
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>
+</body>
+</html>
